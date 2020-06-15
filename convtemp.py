@@ -1,3 +1,5 @@
+from prettytable import PrettyTable
+
 #definição de itens e listas.
 def espaço():
     print(' ')
@@ -5,7 +7,30 @@ def espaço():
 def linha():
     print('--'*30)
 
-lista_valor = list()
+valores = list()
+itens = list()
+table = PrettyTable()
+table.field_names = ["No.", " Vlr Digitado", "Celsius", "Kelvin", "Fahrenheit"]
+
+seq = 0
+
+# Verificação de valor digitado
+
+def conversor_add_table(data):
+
+    valor = data.get('valor')
+    calculos = data.get('calculos')
+
+    if valor not in valores:
+        seq = seq=1
+        celsius = calculos.get('celsius')
+        kelvin = calculos.get('kelvin')
+        fahrenheit = calculos.get('fahrenheit')
+
+        table.add_row([seq, valor, celsius, kelvin, fahrenheit])
+        valores.append(valor)
+
+
 
 # Boas-vindas e nome de usuário
 # print('Seja bem-vindo ao nosso conversor de escala termométrica.')
@@ -14,16 +39,12 @@ lista_valor = list()
 # print('Seja bem-vindo(a)',nome,'vamos começar.')
 # espaço()
 
-# Verificação de valor digitado
 while True:
     valor = float(input('Digite o valor para  converção: '))
 
-    if valor not in lista_valor:
-        lista_valor.append(valor)
-
 # Menu inicial
-        escolha = 0
-        while escolha != 6:
+    escolha = 0
+    while escolha != 6:
                 print('''
 ___________________________________
             MENU PRINCIPAL
@@ -41,44 +62,48 @@ ____________________________________''')
                 linha()
                 espaço()
                 if escolha == 1:
-                    cel_kel = valor + 273.15
-                    cel_fah = (valor * 9) / 5 + 32
-                    lista_valor.append([cel_kel, cel_fah])
+                    cel_kel = '{:.1f}'.format(valor + 273.15)
+                    cel_fah = '{:.1f}'.format((valor * 9) / 5 + 32)
+                    data = {"valor": valor,
+                            "calculos": {
+                                "kelvin": cel_kel,
+                                "fahrenheit": cel_fah},
+                            }
+                    conversor_add_table(data)
+
                     print('''O valor convertido de:
-                    Celsius para Kelvin é = {:.1f} K
-                    Celsius para Fahrenheit é = {:.1f} ºF'''.format(cel_kel, cel_fah))
+                    Celsius para Kelvin é = {} K
+                    Celsius para Fahrenheit é = {}ºF'''.format(cel_kel, cel_fah))
                     espaço()
 
                 elif escolha == 2:
-                    kel_cel = valor -273.15
-                    kel_fah = ((valor - 273.15) / 5) * 9 + 32
-                    lista_valor.append([kel_cel, kel_fah])
+                    kel_cel = '{:.1f}'.format(valor -273.15)
+                    kel_fah = '{:.1f}'.format(((valor - 273.15) / 5) * 9 + 32)
+                    table.add_row([valor, kel_cel, " ", kel_fah])
                     print('''O valor convertido de:
-                    Kelvin para Celsius é = {:.1f} ºC
-                    Kelvin para Fahrenheit é = {:.1f} ºF'''.format(kel_cel, kel_fah))
+                    Kelvin para Celsius é = {} ºC
+                    Kelvin para Fahrenheit é = {} ºF'''.format(kel_cel, kel_fah))
                     espaço()
 
                 elif escolha == 3:
-                    fah_cel = ((valor - 32) / 9) * 5
-                    fah_kel = ((valor - 32) / 9) * 5 + 273
-                    lista_valor.append([fah_cel, fah_kel])
+                    fah_cel = '{:.1f}'.format((valor - 32) / 9) * 5
+                    fah_kel = '{:.1f}'.format(((valor - 32) / 9) * 5 + 273)
+                    table.add_row([valor, fah_cel, fah_kel, " "])
                     print('''O valor convertido de:
-                    Fahrenheit para Celsius é = {:.1f} ºC
-                    Fahrenheit para Kelvin é = {:.1f} K'''.format(fah_cel, fah_kel))
+                    Fahrenheit para Celsius é = {} ºC
+                    Fahrenheit para Kelvin é = {} K'''.format(fah_cel, fah_kel))
                     espaço()
 
                 elif escolha == 4:
-                    valor = float(input('Qual valor você deseja converter? '))
-                    if valor not in lista_valor:
-                        lista_valor.append(valor)
-                    espaço()
+                    break
+                    # valor = float(input('Qual valor você deseja converter? '))
+                    # if valor not in valores:
+                    #     valores.append(valor)
+                    # espaço()
 
                 elif escolha == 5:
-                    # print(lista_valor)
-                    print(f'{"No. Digitado"}{"Celsius":>10}{"Kelvin":>10}{"Fahrenheit":>15}')
-                    for i in enumerate(lista_valor):
-                        print(str(i['0']))
-                    # espaço()
+                    print(table)
+
 
                 elif escolha == 6:
                     print('Finalizando.....')
@@ -86,6 +111,6 @@ ____________________________________''')
                 else:
                     print('Opção errada, tente outra vez.')
 
-        print('Fim do programa! Volte sempre!')
-        break
+    print('Fim do programa! Volte sempre!')
+    break
 
