@@ -1,13 +1,8 @@
 from prettytable import PrettyTable
 
 
-def espaço():
+def espaco():
     print(' ')
-
-
-def linha():
-    print('--' * 30)
-
 
 status = True
 status_menu = "opcao"
@@ -84,7 +79,7 @@ while True:
                 O valor convertido de:
                 Celsius para Kelvin é = {} K
                 Celsius para Fahrenheit é = {}ºF'''.format(cel_kel, cel_fah))
-                espaço()
+                espaco()
                 resposta = str(input(''''
                 Deseja continuar? [S/N]'''))
 
@@ -108,7 +103,7 @@ while True:
                 O valor convertido de:
                 Kelvin para Celsius é = {} ºC
                 Kelvin para Fahrenheit é = {} ºF'''.format(kel_cel, kel_fah))
-                espaço()
+                espaco()
                 resposta = str(input('''
                 Deseja continuar? [S/N]'''))
 
@@ -132,7 +127,7 @@ while True:
                 O valor convertido de:
                 Fahrenheit para Celsius é = {} ºC
                 Fahrenheit para Kelvin é = {} K'''.format(fah_cel, fah_kel))
-                espaço()
+                espaco()
                 resposta = str(input('''
                 Deseja continuar? [S/N]'''))
 
